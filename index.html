@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>材料準備表</title>
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–ios-blue: #007AFF;
+–ios-red: #FF3B30;
+–ios-green: #34C759;
+–ios-gray: #8E8E93;
+–ios-gray2: #AEAEB2;
+–ios-gray3: #C7C7CC;
+–ios-gray4: #D1D1D6;
+–ios-gray5: #E5E5EA;
+–ios-gray6: #F2F2F7;
+–ios-bg: #F2F2F7;
+–ios-card: #FFFFFF;
+–ios-label: #000000;
+–ios-label2: #3C3C43;
+–tab-height: 83px;
+–safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+body {
+font-family: -apple-system, ‘Hiragino Sans’, ‘Hiragino Kaku Gothic ProN’, sans-serif;
+background: #F2F2F7;
+min-height: 100vh;
+-webkit-font-smoothing: antialiased;
+}
+
+/* ─── TAB BAR ─── */
+#tab-bar {
+position: fixed; bottom: 0; left: 0; right: 0;
+height: 83px;
+background: rgba(249,249,249,0.94);
+backdrop-filter: blur(20px) saturate(180%);
+-webkit-backdrop-filter: blur(20px) saturate(180%);
+border-top: 0.5px solid rgba(0,0,0,0.2);
+display: flex; align-items: flex-start; justify-content: space-around;
+padding-top: 10px;
+padding-bottom: env(safe-area-inset-bottom, 0px);
+z-index: 100;
+user-select: none;
+}
+.tab-item {
+display: flex; flex-direction: column; align-items: center; gap: 4px;
+flex: 1; cursor: pointer; padding: 0 4px;
+-webkit-tap-highlight-color: transparent;
+transition: opacity 0.1s;
+}
+.tab-item:active { opacity: 0.6; }
+.tab-icon {
+width: 28px; height: 28px;
+display: flex; align-items: center; justify-content: center;
+font-size: 22px; line-height: 1;
+}
+.tab-label {
+font-size: 10px; font-weight: 500;
+color: #8E8E93;
+letter-spacing: -0.2px;
+}
+.tab-item.active .tab-label { color: #007AFF; }
+.tab-item.active .tab-icon { filter: none; }
+.tab-item .tab-icon svg { fill: #8E8E93; transition: fill 0.15s; }
+.tab-item.active .tab-icon svg { fill: #007AFF; }
+
+/* ─── SCREENS ─── */
+.screen { display: none; }
+.screen.active { display: block; }
+/* Edit screen special */
+#screen-edit.active { display: block; }
+
+/* ─── HOME SCREEN (material list) ─── */
+#screen-home {
+max-width: 520px; margin: 0 auto;
+padding-bottom: calc(83px + 16px);
+}
+.home-header {
+background: rgba(249,249,249,0.94);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-bottom: 0.5px solid rgba(0,0,0,0.15);
+display: flex; align-items: center; justify-content: space-between;
+padding: 0 14px;
+min-height: 52px;
+position: sticky; top: 0; z-index: 10;
+}
+.header-left { width: 60px; }
+.header-center { flex: 1; text-align: center; }
+#app-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; color: #000; display: block; }
+#user-display { font-size: 11px; color: #8E8E93; font-weight: 400; margin-top: 1px; display: block; }
+
+.lang-menu-wrap { position: relative; width: 60px; text-align: right; }
+#lang-btn {
+background: none; border: none;
+color: #007AFF; font-size: 22px; cursor: pointer;
+padding: 8px 4px; line-height: 1;
+-webkit-tap-highlight-color: transparent;
+}
+#lang-dropdown {
+display: none; position: absolute; right: 0; top: calc(100% + 8px);
+background: rgba(255,255,255,0.98);
+border-radius: 14px;
+box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 0 0 0.5px rgba(0,0,0,0.1);
+min-width: 200px; z-index: 200; overflow: hidden;
+}
+#lang-dropdown.open { display: block; }
+.menu-section-label {
+font-size: 11px; color: #8E8E93; font-weight: 500;
+padding: 10px 16px 6px; letter-spacing: 0.3px; text-transform: uppercase;
+}
+.lang-opt {
+display: block; width: 100%; padding: 12px 16px;
+border: none; background: none; text-align: left;
+cursor: pointer; font-size: 15px; color: #000;
+border-top: 0.5px solid #E5E5EA;
+-webkit-tap-highlight-color: transparent;
+font-family: inherit;
+}
+.lang-opt:hover { background: #F2F2F7; }
+.lang-opt.active { color: #007AFF; font-weight: 600; }
+.menu-divider { border: none; border-top: 0.5px solid #D1D1D6; margin: 2px 0; }
+.menu-action {
+display: block; width: 100%; padding: 12px 16px;
+border: none; background: none; text-align: left;
+cursor: pointer; font-size: 15px; color: #000;
+border-top: 0.5px solid #E5E5EA;
+font-family: inherit;
+-webkit-tap-highlight-color: transparent;
+}
+.menu-action:hover { background: #F2F2F7; }
+
+/* Home list */
+.home-list { padding: 20px 16px 0; }
+.home-empty { text-align: center; color: #AEAEB2; font-size: 15px; padding: 80px 0; }
+.section-header {
+font-size: 13px; font-weight: 600; color: #8E8E93;
+text-transform: uppercase; letter-spacing: 0.5px;
+padding: 0 4px 8px;
+}
+.card {
+background: #FFFFFF;
+margin-bottom: 0;
+display: flex; align-items: stretch;
+border-radius: 0;
+overflow: hidden;
+}
+.card:first-of-type { border-radius: 12px 12px 0 0; }
+.card:last-of-type { border-radius: 0 0 12px 12px; margin-bottom: 20px; }
+.card:only-of-type { border-radius: 12px; margin-bottom: 20px; }
+.card + .card { border-top: 0.5px solid #E5E5EA; }
+.card-main {
+flex: 1; padding: 12px 16px; cursor: pointer;
+display: flex; align-items: center; gap: 12px;
+-webkit-tap-highlight-color: transparent;
+}
+.card-main:active { background: #F2F2F7; }
+.card-icon {
+width: 36px; height: 36px; border-radius: 8px;
+background: linear-gradient(135deg, #007AFF 0%, #0055CC 100%);
+display: flex; align-items: center; justify-content: center;
+font-size: 18px; flex-shrink: 0;
+}
+.card-text { flex: 1; min-width: 0; }
+.card-name {
+font-size: 15px; font-weight: 500; color: #000;
+margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.card-meta { font-size: 12px; color: #8E8E93; }
+.card-shared-by {
+font-size: 11px; color: #007AFF;
+background: rgba(0,122,255,0.08); border-radius: 4px;
+padding: 1px 5px; display: inline-block; margin-top: 2px;
+}
+.card-chevron { color: #C7C7CC; font-size: 14px; padding-right: 4px; }
+.card-actions { display: flex; }
+.card-share {
+background: none; border: none; border-left: 0.5px solid #E5E5EA;
+color: #007AFF; font-size: 18px; padding: 0 14px; cursor: pointer;
+-webkit-tap-highlight-color: transparent;
+}
+.card-del {
+background: none; border: none; border-left: 0.5px solid #E5E5EA;
+color: #FF3B30; font-size: 16px; padding: 0 14px; cursor: pointer;
+-webkit-tap-highlight-color: transparent;
+}
+
+.home-fab {
+position: fixed; bottom: calc(83px + 16px);
+left: 50%; transform: translateX(-50%);
+width: calc(min(520px, 96vw) - 32px);
+padding: 15px; background: #007AFF; color: #fff;
+border: none; border-radius: 14px;
+font-size: 16px; font-weight: 600; cursor: pointer;
+box-shadow: 0 4px 20px rgba(0,122,255,0.4);
+letter-spacing: -0.2px;
+font-family: inherit;
+-webkit-tap-highlight-color: transparent;
+}
+.home-fab:active { background: #0060CC; transform: translateX(-50%) scale(0.98); }
+
+/* ─── EDIT SCREEN ─── */
+#screen-edit { display: none; max-width: 520px; margin: 0 auto; padding-bottom: 20px; }
+.edit-topbar {
+background: rgba(249,249,249,0.94);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-bottom: 0.5px solid rgba(0,0,0,0.15);
+display: flex; align-items: center; justify-content: space-between;
+padding: 0 16px; height: 50px;
+position: sticky; top: 0; z-index: 10;
+}
+.back-btn {
+background: none; border: none; color: #007AFF;
+font-size: 15px; cursor: pointer; padding: 8px 0;
+font-family: inherit; font-weight: 400;
+-webkit-tap-highlight-color: transparent;
+}
+.edit-title { font-size: 15px; font-weight: 600; color: #000; }
+.sheet { background: #fff; padding: 14px; }
+.site-label { font-size: 10px; color: #888; }
+#siteInput {
+width: 100%; font-size: 20px; font-weight: bold; border: none;
+border-bottom: 2px solid #333; outline: none; margin-bottom: 12px; padding: 2px 4px;
+}
+#siteInput::placeholder { color: #ccc; }
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+.col-wrap { display: flex; flex-direction: column; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+th, td { border: 1px solid #ccc; padding: 2px 4px; font-size: 11px; }
+th { background: #eee; text-align: center; font-size: 12px; }
+input.custom-title {
+width: 100%; font-size: 12px; font-weight: bold;
+border: none; background: transparent; outline: none;
+text-align: center; padding: 0; font-family: inherit;
+}
+input.custom-title::placeholder { color: #aaa; font-weight: normal; }
+.name-td { width: auto; }
+.qty-td { text-align: right; white-space: nowrap; width: 1%; padding-right: 4px; }
+.qty-td input.qty { width: 34px; font-size: 13px; font-weight: bold; text-align: center; border: 1px solid #ccc; padding: 1px 2px; vertical-align: middle; font-family: inherit; }
+.qty-td .unit { font-size: 10px; color: #555; margin-left: 2px; vertical-align: middle; }
+.del-td { width: 18px; text-align: center; padding: 0 2px; border-left: none; }
+.del { background: none; border: none; color: #bbb; font-size: 11px; cursor: pointer; padding: 0; }
+.del:hover { color: #FF3B30; }
+input.ni { width: 100%; font-size: 11px; border: 1px solid #ccc; padding: 1px 3px; font-family: inherit; }
+input.shaku { width: 28px; font-size: 12px; border: 1px solid #ccc; padding: 1px 2px; text-align: center; vertical-align: middle; font-family: inherit; }
+.add-btn {
+width: 100%; padding: 3px; font-size: 11px; cursor: pointer;
+background: #f9f9f9; border: 1px dashed #aaa; margin-bottom: 8px; color: #666;
+font-family: inherit;
+}
+.add-title-btn {
+width: 100%; padding: 5px; font-size: 11px; cursor: pointer;
+background: #f0f4ff; border: 1px dashed #88a; margin-top: 4px;
+color: #446; border-radius: 3px; margin-bottom: 4px;
+font-family: inherit;
+}
+.section-del-btn {
+display: block; width: 100%; padding: 2px; font-size: 10px;
+cursor: pointer; background: none; border: none;
+color: #ccc; text-align: right; margin-bottom: 2px;
+font-family: inherit;
+}
+.section-del-btn:hover { color: #FF3B30; }
+
+.actions { padding: 10px 14px 0; display: flex; gap: 6px; flex-wrap: wrap; }
+.actions button {
+padding: 9px 14px; font-size: 13px; cursor: pointer;
+border: none; border-radius: 10px; font-family: inherit; font-weight: 500;
+background: #E5E5EA; color: #000;
+}
+.btn-confirm { background: #007AFF !important; color: #fff !important; }
+#btn-edit { display: none; }
+body.confirmed .del { display: none !important; }
+body.confirmed .add-btn { display: none !important; }
+body.confirmed .add-title-btn { display: none !important; }
+body.confirmed .section-del-btn { display: none !important; }
+body.confirmed #btn-confirm { display: none; }
+body.confirmed #btn-edit { display: inline-block; }
+body.confirmed input.qty { border: none; border-bottom: 1px solid #bbb; background: transparent; font-weight: bold; }
+body.confirmed input.ni, body.confirmed input.shaku { border: none; border-bottom: 1px solid #bbb; background: transparent; }
+body.confirmed input.custom-title { border-bottom: none; }
+
+/* ─── CALENDAR SCREEN ─── */
+#screen-calendar {
+max-width: 520px; margin: 0 auto;
+padding-bottom: calc(83px + 16px);
+min-height: 100vh;
+}
+.cal-header {
+background: rgba(249,249,249,0.94);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-bottom: 0.5px solid rgba(0,0,0,0.15);
+padding: 14px 20px 12px;
+position: sticky; top: 0; z-index: 10;
+}
+.cal-nav {
+display: flex; align-items: center; justify-content: space-between;
+margin-bottom: 14px;
+}
+.cal-nav-title {
+font-size: 22px; font-weight: 700; color: #000;
+letter-spacing: -0.5px;
+}
+.cal-nav-title span { color: #007AFF; }
+.cal-nav-btns { display: flex; gap: 4px; }
+.cal-nav-btn {
+background: #E5E5EA; border: none; border-radius: 50%;
+width: 32px; height: 32px; cursor: pointer;
+display: flex; align-items: center; justify-content: center;
+color: #007AFF; font-size: 16px; font-weight: 600;
+-webkit-tap-highlight-color: transparent;
+transition: background 0.1s;
+}
+.cal-nav-btn:active { background: #D1D1D6; }
+.cal-today-btn {
+background: none; border: none; color: #007AFF;
+font-size: 15px; font-weight: 500; cursor: pointer;
+font-family: inherit; padding: 4px 8px; border-radius: 8px;
+-webkit-tap-highlight-color: transparent;
+}
+.cal-today-btn:active { background: rgba(0,122,255,0.1); }
+.cal-weekdays {
+display: grid; grid-template-columns: repeat(7, 1fr);
+text-align: center;
+}
+.cal-wd {
+font-size: 11px; font-weight: 600; color: #8E8E93;
+padding: 3px 0; letter-spacing: 0.3px; text-transform: uppercase;
+}
+.cal-wd:first-child { color: #FF3B30; }
+.cal-wd:last-child { color: #007AFF; }
+
+/* Calendar grid */
+.cal-body { padding: 0 16px 16px; }
+.cal-grid {
+display: grid; grid-template-columns: repeat(7, 1fr);
+background: #FFFFFF;
+border-radius: 16px;
+overflow: hidden;
+box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+margin-top: 10px;
+}
+.cal-cell {
+aspect-ratio: 1;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center;
+cursor: pointer; position: relative;
+padding: 4px 2px 2px;
+-webkit-tap-highlight-color: transparent;
+border-bottom: 0.5px solid #E5E5EA;
+border-right: 0.5px solid #E5E5EA;
+min-height: 44px;
+}
+.cal-cell:nth-child(7n) { border-right: none; }
+.cal-cell:nth-last-child(-n+7) { border-bottom: none; }
+.cal-cell:active { background: #F2F2F7; }
+.cal-day {
+font-size: 15px; font-weight: 400; color: #000;
+width: 30px; height: 30px; display: flex;
+align-items: center; justify-content: center;
+border-radius: 50%; line-height: 1;
+}
+.cal-cell.other-month .cal-day { color: #C7C7CC; }
+.cal-cell.sun .cal-day { color: #FF3B30; }
+.cal-cell.sat .cal-day { color: #007AFF; }
+.cal-cell.other-month.sun .cal-day { color: rgba(255,59,48,0.3); }
+.cal-cell.other-month.sat .cal-day { color: rgba(0,122,255,0.3); }
+.cal-cell.today .cal-day {
+background: #007AFF; color: #fff !important;
+font-weight: 700;
+}
+.cal-cell.selected:not(.today) .cal-day {
+background: rgba(0,122,255,0.15);
+color: #007AFF !important; font-weight: 600;
+}
+.cal-dots {
+display: flex; gap: 2px; justify-content: center;
+position: absolute; bottom: 3px;
+}
+.cal-dot {
+width: 4px; height: 4px; border-radius: 50%;
+background: #007AFF;
+}
+.cal-dot.green { background: #34C759; }
+.cal-dot.red { background: #FF3B30; }
+
+/* Event panel */
+.cal-events-panel { margin-top: 20px; }
+.cal-events-date {
+font-size: 17px; font-weight: 600; color: #000;
+padding: 0 4px 10px; letter-spacing: -0.3px;
+}
+.cal-events-date span { color: #8E8E93; font-weight: 400; font-size: 14px; }
+.cal-event-list { background: #FFFFFF; border-radius: 12px; overflow: hidden; }
+.cal-no-events {
+padding: 20px 16px; text-align: center;
+color: #AEAEB2; font-size: 14px;
+}
+.cal-event-row {
+display: flex; align-items: center; padding: 12px 16px;
+border-bottom: 0.5px solid #E5E5EA; gap: 12px;
+cursor: pointer;
+-webkit-tap-highlight-color: transparent;
+}
+.cal-event-row:last-child { border-bottom: none; }
+.cal-event-row:active { background: #F2F2F7; }
+.cal-event-color {
+width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.cal-event-info { flex: 1; min-width: 0; }
+.cal-event-title {
+font-size: 15px; font-weight: 500; color: #000;
+white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cal-event-sub { font-size: 12px; color: #8E8E93; margin-top: 2px; }
+.cal-event-del {
+background: none; border: none; color: #C7C7CC;
+font-size: 20px; padding: 0 2px; cursor: pointer; line-height: 1;
+-webkit-tap-highlight-color: transparent;
+}
+.cal-event-del:active { color: #FF3B30; }
+
+.cal-add-btn {
+display: flex; align-items: center; gap: 8px;
+background: #FFFFFF; border-radius: 12px;
+padding: 13px 16px; margin-top: 8px; cursor: pointer;
+border: none; width: 100%; text-align: left; font-family: inherit;
+color: #007AFF; font-size: 15px; font-weight: 500;
+-webkit-tap-highlight-color: transparent;
+box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.cal-add-btn:active { background: #F2F2F7; }
+
+/* ─── MODALS ─── */
+.modal-overlay {
+display: none; position: fixed; inset: 0;
+background: rgba(0,0,0,0.45); z-index: 500;
+align-items: flex-end; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+background: #FFFFFF;
+border-radius: 20px 20px 0 0;
+padding: 8px 0 0;
+width: 100%; max-width: 520px;
+box-shadow: 0 -4px 32px rgba(0,0,0,0.2);
+padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+animation: slideUp 0.28s cubic-bezier(0.32,0.72,0,1);
+}
+@keyframes slideUp {
+from { transform: translateY(100%); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+.modal-handle {
+width: 36px; height: 4px; background: #D1D1D6;
+border-radius: 2px; margin: 0 auto 16px;
+}
+.modal-title {
+font-size: 17px; font-weight: 600; color: #000;
+text-align: center; padding: 0 20px 16px;
+border-bottom: 0.5px solid #E5E5EA;
+}
+.modal-desc { font-size: 13px; color: #8E8E93; padding: 12px 20px 4px; line-height: 1.5; }
+.modal-input {
+display: block; width: calc(100% - 40px); margin: 12px 20px;
+font-size: 16px; padding: 12px 14px;
+border: none; border-radius: 12px; background: #F2F2F7;
+outline: none; font-family: inherit; color: #000;
+}
+.modal-input:focus { background: #E5E5EA; }
+.modal-textarea {
+display: block; width: calc(100% - 40px); margin: 0 20px 12px;
+font-size: 13px; padding: 12px 14px;
+border: none; border-radius: 12px; background: #F2F2F7;
+outline: none; height: 100px; resize: none; font-family: monospace;
+word-break: break-all; color: #333;
+}
+.modal-textarea:focus { background: #E5E5EA; }
+.modal-toast {
+font-size: 13px; color: #34C759;
+margin: -4px 0 8px; text-align: center; min-height: 18px;
+}
+.modal-actions {
+display: flex; border-top: 0.5px solid #E5E5EA; margin-top: 4px;
+}
+.modal-actions button {
+flex: 1; padding: 14px;
+background: none; border: none; font-size: 17px;
+cursor: pointer; font-family: inherit;
+-webkit-tap-highlight-color: transparent;
+transition: background 0.1s;
+}
+.modal-actions button:active { background: #F2F2F7; }
+.modal-actions button + button { border-left: 0.5px solid #E5E5EA; }
+.modal-btn-cancel { color: #8E8E93; }
+.modal-btn-primary { color: #007AFF; font-weight: 600; }
+
+/* Calendar event modal */
+#modal-event .modal-box { border-radius: 20px 20px 0 0; }
+.modal-color-row {
+display: flex; gap: 10px; padding: 4px 20px 12px; justify-content: flex-start;
+}
+.color-dot-btn {
+width: 28px; height: 28px; border-radius: 50%; border: 3px solid transparent;
+cursor: pointer; transition: border-color 0.15s; flex-shrink: 0;
+-webkit-tap-highlight-color: transparent;
+}
+.color-dot-btn.selected { border-color: #000; }
+.modal-link-section { padding: 0 20px 12px; }
+.modal-link-label { font-size: 13px; color: #8E8E93; margin-bottom: 8px; font-weight: 500; }
+.modal-link-list { display: flex; flex-direction: column; gap: 4px; }
+.modal-link-item {
+display: flex; align-items: center; gap: 10px;
+padding: 10px 12px; background: #F2F2F7; border-radius: 10px;
+cursor: pointer; border: 2px solid transparent;
+-webkit-tap-highlight-color: transparent;
+transition: border-color 0.1s;
+}
+.modal-link-item.selected { border-color: #007AFF; background: rgba(0,122,255,0.06); }
+.modal-link-item-icon { font-size: 18px; }
+.modal-link-item-name { font-size: 13px; color: #000; font-weight: 500; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.modal-link-check { color: #007AFF; font-size: 16px; font-weight: 700; }
+
+/* Profile/import modals */
+#modal-profile .modal-overlay, #modal-share-show, #modal-import {
+align-items: flex-end;
+}
+
+/* ─── PRINT ─── */
+@media print {
+@page { size: A4 portrait; margin: 5mm 6mm; }
+html, body { height: 100%; margin: 0; padding: 0; background: #fff; }
+#screen-home { display: none !important; }
+#screen-calendar { display: none !important; }
+#tab-bar { display: none !important; }
+.modal-overlay { display: none !important; }
+#screen-edit {
+display: flex !important; flex-direction: column;
+max-width: 100%; width: 100%; height: 100%;
+padding: 0 !important; margin: 0 !important;
+}
+.edit-topbar, .actions, .add-btn, .add-title-btn, .section-del-btn, .del, .del-td { display: none !important; }
+.sheet { flex: 1; display: flex; flex-direction: column; padding: 4px !important; }
+.columns { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; }
+.site-label { font-size: 10pt !important; }
+#siteInput { font-size: 22pt !important; margin-bottom: 6px !important; }
+th { font-size: 15pt !important; padding: 6px !important; }
+td { font-size: 14pt !important; padding: 6px !important; }
+.qty-td input.qty { font-size: 15pt !important; width: 52px !important; }
+.qty-td .unit { font-size: 12pt !important; }
+input.ni { font-size: 14pt !important; }
+input.shaku { font-size: 14pt !important; width: 40px !important; }
+input.custom-title { font-size: 15pt !important; }
+table { margin-bottom: 6px !important; }
+input { border: none !important; border-bottom: 0.5pt solid #999 !important; background: transparent !important; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ─── HOME SCREEN ─── -->
+
+<div id="screen-home" class="screen active">
+  <div class="home-header">
+    <div class="header-left"></div>
+    <div class="header-center">
+      <span id="app-title">材料準備表</span>
+      <span id="user-display"></span>
+    </div>
+    <div class="lang-menu-wrap">
+      <button id="lang-btn">☰</button>
+      <div id="lang-dropdown">
+        <div class="menu-section-label">言語 / Language</div>
+        <button class="lang-opt active" data-lang="ja">🇯🇵 日本語</button>
+        <button class="lang-opt" data-lang="en">🇺🇸 English</button>
+        <button class="lang-opt" data-lang="vi">🇻🇳 Tiếng Việt</button>
+        <hr class="menu-divider">
+        <button class="menu-action" id="menu-profile">👤 <span id="menu-profile-label">名前を設定</span></button>
+        <button class="menu-action" id="menu-import">📥 <span id="menu-import-label">共有コードを入力</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="home-list" id="home-list"></div>
+  <p class="home-empty" id="home-empty"></p>
+  <button class="home-fab" id="btn-new">＋ 新規作成</button>
+</div>
+
+<!-- ─── EDIT SCREEN ─── -->
+
+<div id="screen-edit" class="screen">
+  <div class="edit-topbar">
+    <button class="back-btn" id="btn-back">‹ 保存して戻る</button>
+    <span class="edit-title">材料準備表</span>
+    <span style="width:80px"></span>
+  </div>
+  <div class="sheet" id="sheet">
+    <div class="site-label">現場名</div>
+    <input id="siteInput" type="text" placeholder="現場名を入力">
+    <div class="columns">
+      <div class="col-wrap" id="col-left">
+        <table id="kokan-table"><thead><tr><th colspan="3">鋼管</th></tr></thead><tbody id="kokan-body"></tbody></table>
+        <button class="add-btn" id="add-kokan">＋ 鋼管を追加</button>
+        <table id="kin-table"><thead><tr><th colspan="3">金物</th></tr></thead><tbody id="kin-body"></tbody></table>
+        <button class="add-btn" id="add-kin">＋ 金物を追加</button>
+        <table id="bata-table"><thead><tr><th colspan="3">バタ</th></tr></thead><tbody id="bata-body"></tbody></table>
+        <button class="add-btn" id="add-bata">＋ バタを追加</button>
+        <button class="add-title-btn" id="add-title-left">＋ タイトルを追加</button>
+      </div>
+      <div class="col-wrap" id="col-right">
+        <table id="sup-table"><thead><tr><th colspan="3">サポート</th></tr></thead><tbody id="sup-body"></tbody></table>
+        <button class="add-btn" id="add-sup">＋ サポートを追加</button>
+        <table id="sangi-table"><thead><tr><th colspan="3">桟木</th></tr></thead><tbody id="sangi-body"></tbody></table>
+        <button class="add-btn" id="add-sangi">＋ 桟木を追加</button>
+        <table id="dogu-table"><thead><tr><th colspan="3">道具</th></tr></thead><tbody id="dogu-body"></tbody></table>
+        <button class="add-btn" id="add-dogu">＋ 道具を追加</button>
+        <button class="add-title-btn" id="add-title-right">＋ タイトルを追加</button>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn-confirm" id="btn-confirm">✔ 決定</button>
+    <button id="btn-edit">✎ 編集</button>
+    <button id="btn-reset">リセット</button>
+    <button id="btn-print">印刷 / PDF</button>
+  </div>
+</div>
+
+<!-- ─── CALENDAR SCREEN ─── -->
+
+<div id="screen-calendar" class="screen">
+  <div class="cal-header">
+    <div class="cal-nav">
+      <div class="cal-nav-title" id="cal-month-label">2026年<span>5月</span></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button class="cal-today-btn" id="cal-today-btn">今日</button>
+        <div class="cal-nav-btns">
+          <button class="cal-nav-btn" id="cal-prev">‹</button>
+          <button class="cal-nav-btn" id="cal-next">›</button>
+        </div>
+      </div>
+    </div>
+    <div class="cal-weekdays">
+      <div class="cal-wd">日</div><div class="cal-wd">月</div>
+      <div class="cal-wd">火</div><div class="cal-wd">水</div>
+      <div class="cal-wd">木</div><div class="cal-wd">金</div>
+      <div class="cal-wd">土</div>
+    </div>
+  </div>
+  <div class="cal-body">
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-events-panel">
+      <div class="cal-events-date" id="cal-events-date"></div>
+      <div class="cal-event-list" id="cal-event-list"></div>
+      <button class="cal-add-btn" id="cal-add-btn">
+        <span style="font-size:20px;font-weight:300;line-height:1">＋</span>
+        <span id="cal-add-label">予定を追加</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TAB BAR ─── -->
+
+<div id="tab-bar">
+  <div class="tab-item active" data-tab="home">
+    <div class="tab-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+      </svg>
+    </div>
+    <div class="tab-label" id="tab-label-home">材料表</div>
+  </div>
+  <div class="tab-item" data-tab="calendar">
+    <div class="tab-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zm0-13H5V6h14v1z"/>
+      </svg>
+    </div>
+    <div class="tab-label" id="tab-label-cal">カレンダー</div>
+  </div>
+</div>
+
+<!-- MODALS: profile, share, import (same as before) -->
+
+<div class="modal-overlay" id="modal-profile">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-profile-title">名前を設定</div>
+    <div class="modal-desc" id="modal-profile-desc">共有した材料表に名前が表示されます。</div>
+    <input class="modal-input" id="profile-name-input" type="text" placeholder="名前を入力" maxlength="20">
+    <div class="modal-actions">
+      <button class="modal-btn-cancel" id="modal-profile-cancel">キャンセル</button>
+      <button class="modal-btn-primary" id="modal-profile-save">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-share-show">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-share-title">共有コード</div>
+    <div class="modal-desc" id="modal-share-desc">このコードを相手に送ってください。</div>
+    <textarea class="modal-textarea" id="share-code-text" readonly></textarea>
+    <div class="modal-toast" id="share-toast"></div>
+    <div class="modal-actions">
+      <button class="modal-btn-cancel" id="modal-share-close">閉じる</button>
+      <button class="modal-btn-primary" id="modal-share-copy">コピー</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-import">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-import-title">共有コードを入力</div>
+    <div class="modal-desc" id="modal-import-desc">受け取ったコードを貼り付けてください。</div>
+    <textarea class="modal-textarea" id="import-code-text" placeholder="ここにコードを貼り付け"></textarea>
+    <div class="modal-toast" id="import-toast"></div>
+    <div class="modal-actions">
+      <button class="modal-btn-cancel" id="modal-import-cancel">キャンセル</button>
+      <button class="modal-btn-primary" id="modal-import-ok">インポート</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: calendar event -->
+
+<div class="modal-overlay" id="modal-event">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-event-title">予定を追加</div>
+    <input class="modal-input" id="event-name-input" type="text" placeholder="タイトルを入力" maxlength="40">
+    <div class="modal-color-row" id="event-color-row"></div>
+    <div class="modal-link-section" id="event-link-section">
+      <div class="modal-link-label">材料表を紐づける（任意）</div>
+      <div class="modal-link-list" id="event-link-list"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn-cancel" id="modal-event-cancel">キャンセル</button>
+      <button class="modal-btn-primary" id="modal-event-save">追加</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var LS_KEY      = 'zairyo_v5';
+  var LS_USER_KEY = 'zairyo_user';
+  var LS_CAL_KEY  = 'zairyo_cal_v1';
+  var currentId   = null;
+  var currentLang = 'ja';
+  var counts = { kokan:0, kin:0, bata:0, sup:0, sangi:0, dogu:0 };
+  var customCount = 0;
+
+  // Calendar state
+  var calYear, calMonth, calSelectedDate, calEditingEventId = null;
+  var EVENT_COLORS = ['#007AFF','#34C759','#FF3B30','#FF9500','#AF52DE','#5AC8FA'];
+
+  var MATERIALS = {
+    kokan:'鋼管', kin:'金物', bata:'バタ',
+    sup:'サポート', sangi:'桟木', dogu:'道具'
+  };
+
+  var T = {
+    ja: {
+      appTitle:'材料準備表', homeEmpty:'保存された表がありません',
+      btnNew:'＋ 新規作成', siteLabel:'現場名', sitePlaceholder:'現場名を入力',
+      btnConfirm:'✔ 決定', btnEdit:'✎ 編集', btnReset:'リセット', btnPrint:'印刷 / PDF',
+      addSuffix:'を追加', addTitle:'＋ タイトルを追加', addRowSuffix:'行を追加',
+      deleteConfirm:'この表を削除しますか？', resetConfirm:'この表の内容をリセットしますか？',
+      rowDeleteConfirm:'この行を削除しますか？', sectionDeleteConfirm:'このセクションを削除しますか？',
+      menuProfile:'名前を設定', menuImport:'共有コードを入力',
+      modalProfileTitle:'名前を設定', modalProfileDesc:'共有した材料表に名前が表示されます。',
+      modalProfilePlaceholder:'名前を入力',
+      modalShareTitle:'共有コード', modalShareDesc:'このコードを相手に送ってください。',
+      modalImportTitle:'共有コードを入力', modalImportDesc:'受け取ったコードを貼り付けてください。',
+      modalImportPlaceholder:'ここにコードを貼り付け',
+      btnCancel:'キャンセル', btnSave:'保存', btnCopy:'コピー', btnClose:'閉じる', btnImport:'インポート',
+      copied:'コピーしました！', importOk:'インポートしました ✔', importErr:'コードが正しくありません。',
+      sharedBy:'から共有', customTitlePlaceholder:'タイトルを入力',
+      tabHome:'材料表', tabCal:'カレンダー',
+      calToday:'今日', calAddEvent:'予定を追加', calAddModalTitle:'予定を追加',
+      calEditModalTitle:'予定を編集', calNoEvents:'予定なし',
+      calEventPlaceholder:'タイトルを入力', calLinkLabel:'材料表を紐づける（任意）',
+    },
+    en: {
+      appTitle:'Material Preparation', homeEmpty:'No saved lists',
+      btnNew:'＋ New', siteLabel:'Site Name', sitePlaceholder:'Enter site name',
+      btnConfirm:'✔ Confirm', btnEdit:'✎ Edit', btnReset:'Reset', btnPrint:'Print / PDF',
+      addSuffix:' Add', addTitle:'＋ Add Title', addRowSuffix:'Add Row',
+      deleteConfirm:'Delete this list?', resetConfirm:'Reset this list?',
+      rowDeleteConfirm:'Delete this row?', sectionDeleteConfirm:'Delete this section?',
+      menuProfile:'Set Name', menuImport:'Import Share Code',
+      modalProfileTitle:'Set Name', modalProfileDesc:'Your name will appear on shared lists.',
+      modalProfilePlaceholder:'Enter your name',
+      modalShareTitle:'Share Code', modalShareDesc:'Send this code to share your list.',
+      modalImportTitle:'Import Share Code', modalImportDesc:'Paste the code you received.',
+      modalImportPlaceholder:'Paste code here',
+      btnCancel:'Cancel', btnSave:'Save', btnCopy:'Copy', btnClose:'Close', btnImport:'Import',
+      copied:'Copied!', importOk:'Imported ✔', importErr:'Invalid code.',
+      sharedBy:'Shared by', customTitlePlaceholder:'Enter title',
+      tabHome:'Lists', tabCal:'Calendar',
+      calToday:'Today', calAddEvent:'Add Event', calAddModalTitle:'Add Event',
+      calEditModalTitle:'Edit Event', calNoEvents:'No events',
+      calEventPlaceholder:'Title', calLinkLabel:'Link a material list (optional)',
+    },
+    vi: {
+      appTitle:'Chuẩn bị vật liệu', homeEmpty:'Không có danh sách',
+      btnNew:'＋ Tạo mới', siteLabel:'Tên công trường', sitePlaceholder:'Nhập tên công trường',
+      btnConfirm:'✔ Xác nhận', btnEdit:'✎ Chỉnh sửa', btnReset:'Đặt lại', btnPrint:'In / PDF',
+      addSuffix:' Thêm', addTitle:'＋ Thêm tiêu đề', addRowSuffix:'Thêm hàng',
+      deleteConfirm:'Xóa danh sách này?', resetConfirm:'Đặt lại danh sách này?',
+      rowDeleteConfirm:'Xóa hàng này?', sectionDeleteConfirm:'Xóa mục này?',
+      menuProfile:'Đặt tên', menuImport:'Nhập mã chia sẻ',
+      modalProfileTitle:'Đặt tên', modalProfileDesc:'Tên của bạn sẽ hiển thị trên danh sách được chia sẻ.',
+      modalProfilePlaceholder:'Nhập tên của bạn',
+      modalShareTitle:'Mã chia sẻ', modalShareDesc:'Gửi mã này cho người khác.',
+      modalImportTitle:'Nhập mã chia sẻ', modalImportDesc:'Dán mã bạn nhận được.',
+      modalImportPlaceholder:'Dán mã vào đây',
+      btnCancel:'Hủy', btnSave:'Lưu', btnCopy:'Sao chép', btnClose:'Đóng', btnImport:'Nhập',
+      copied:'Đã sao chép!', importOk:'Đã nhập ✔', importErr:'Mã không hợp lệ.',
+      sharedBy:'Chia sẻ bởi', customTitlePlaceholder:'Nhập tiêu đề',
+      tabHome:'Danh sách', tabCal:'Lịch',
+      calToday:'Hôm nay', calAddEvent:'Thêm sự kiện', calAddModalTitle:'Thêm sự kiện',
+      calEditModalTitle:'Sửa sự kiện', calNoEvents:'Không có sự kiện',
+      calEventPlaceholder:'Tiêu đề', calLinkLabel:'Liên kết danh sách (tùy chọn)',
+    }
+  };
+
+  /* ── USER ── */
+  function getUserName() { return localStorage.getItem(LS_USER_KEY) || ''; }
+  function setUserName(name) {
+    if (name) localStorage.setItem(LS_USER_KEY, name);
+    else localStorage.removeItem(LS_USER_KEY);
+  }
+  function updateUserDisplay() {
+    var name = getUserName();
+    document.getElementById('user-display').textContent = name ? '👤 ' + name : '';
+  }
+
+  /* ── LANG ── */
+  function applyLang(lang) {
+    var t = T[lang];
+    document.getElementById('app-title').textContent = t.appTitle;
+    document.getElementById('btn-new').textContent = t.btnNew;
+    var emptyEl = document.getElementById('home-empty');
+    if (emptyEl.textContent !== '') emptyEl.textContent = t.homeEmpty;
+    document.querySelector('.site-label').textContent = t.siteLabel;
+    document.getElementById('siteInput').placeholder = t.sitePlaceholder;
+    document.getElementById('btn-confirm').textContent = t.btnConfirm;
+    document.getElementById('btn-edit').textContent = t.btnEdit;
+    document.getElementById('btn-reset').textContent = t.btnReset;
+    document.getElementById('btn-print').textContent = t.btnPrint;
+    Object.keys(MATERIALS).forEach(function(type) {
+      var btn = document.getElementById('add-' + type);
+      if (btn) btn.textContent = '＋ ' + MATERIALS[type] + t.addSuffix;
+    });
+    document.getElementById('add-title-left').textContent = t.addTitle;
+    document.getElementById('add-title-right').textContent = t.addTitle;
+    document.querySelectorAll('.custom-add-btn').forEach(function(btn) {
+      btn.textContent = '＋ ' + t.addRowSuffix;
+    });
+    document.querySelectorAll('input.custom-title').forEach(function(inp) {
+      inp.placeholder = t.customTitlePlaceholder;
+    });
+    document.querySelectorAll('.lang-opt').forEach(function(opt) {
+      opt.classList.toggle('active', opt.dataset.lang === lang);
+    });
+    document.getElementById('menu-profile-label').textContent = t.menuProfile;
+    document.getElementById('menu-import-label').textContent = t.menuImport;
+    document.getElementById('modal-profile-title').textContent = t.modalProfileTitle;
+    document.getElementById('modal-profile-desc').textContent = t.modalProfileDesc;
+    document.getElementById('profile-name-input').placeholder = t.modalProfilePlaceholder;
+    document.getElementById('modal-profile-cancel').textContent = t.btnCancel;
+    document.getElementById('modal-profile-save').textContent = t.btnSave;
+    document.getElementById('modal-share-title').textContent = t.modalShareTitle;
+    document.getElementById('modal-share-desc').textContent = t.modalShareDesc;
+    document.getElementById('modal-share-close').textContent = t.btnClose;
+    document.getElementById('modal-share-copy').textContent = t.btnCopy;
+    document.getElementById('modal-import-title').textContent = t.modalImportTitle;
+    document.getElementById('modal-import-desc').textContent = t.modalImportDesc;
+    document.getElementById('import-code-text').placeholder = t.modalImportPlaceholder;
+    document.getElementById('modal-import-cancel').textContent = t.btnCancel;
+    document.getElementById('modal-import-ok').textContent = t.btnImport;
+    // Tab labels
+    document.getElementById('tab-label-home').textContent = t.tabHome;
+    document.getElementById('tab-label-cal').textContent = t.tabCal;
+    // Calendar
+    document.getElementById('cal-today-btn').textContent = t.calToday;
+    document.getElementById('cal-add-label').textContent = t.calAddEvent;
+    document.getElementById('event-name-input').placeholder = t.calEventPlaceholder;
+  }
+
+  /* ── LANG MENU ── */
+  document.getElementById('lang-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.getElementById('lang-dropdown').classList.toggle('open');
+  });
+  document.querySelectorAll('.lang-opt').forEach(function(opt) {
+    opt.addEventListener('click', function() {
+      currentLang = this.dataset.lang;
+      applyLang(currentLang);
+      document.getElementById('lang-dropdown').classList.remove('open');
+    });
+  });
+  document.addEventListener('click', function() {
+    document.getElementById('lang-dropdown').classList.remove('open');
+  });
+
+  /* ── TAB BAR ── */
+  var currentTab = 'home';
+  document.querySelectorAll('.tab-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var tab = this.dataset.tab;
+      switchTab(tab);
+    });
+  });
+  function switchTab(tab) {
+    if (tab === currentTab && tab !== 'calendar') return;
+    currentTab = tab;
+    document.querySelectorAll('.tab-item').forEach(function(it) {
+      it.classList.toggle('active', it.dataset.tab === tab);
+    });
+    // Hide all screens
+    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById('tab-bar').style.display = 'flex';
+    if (tab === 'home') {
+      document.getElementById('screen-home').classList.add('active');
+    } else if (tab === 'calendar') {
+      document.getElementById('screen-calendar').classList.add('active');
+      renderCalendar();
+    }
+  }
+
+  /* ── STORAGE ── */
+  function lsLoad() {
+    try { var r = localStorage.getItem(LS_KEY); return r ? JSON.parse(r) : []; } catch(e) { return []; }
+  }
+  function lsSave(arr) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(arr)); } catch(e) {}
+  }
+  function calLoad() {
+    try { var r = localStorage.getItem(LS_CAL_KEY); return r ? JSON.parse(r) : []; } catch(e) { return []; }
+  }
+  function calSave(arr) {
+    try { localStorage.setItem(LS_CAL_KEY, JSON.stringify(arr)); } catch(e) {}
+  }
+
+  /* ── SHARE ── */
+  var SHARE_PREFIX = 'ZAIRYO1:';
+  function encodeShare(entry) {
+    var payload = { creator: getUserName() || '―', siteName: entry.siteName, savedAt: entry.savedAt, data: entry.data };
+    return SHARE_PREFIX + btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  }
+  function decodeShare(code) {
+    code = code.trim();
+    if (code.indexOf(SHARE_PREFIX) !== 0) throw new Error('invalid');
+    return JSON.parse(decodeURIComponent(escape(atob(code.slice(SHARE_PREFIX.length)))));
+  }
+
+  /* ── MODALS ── */
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+  document.getElementById('menu-profile').addEventListener('click', function() {
+    document.getElementById('lang-dropdown').classList.remove('open');
+    document.getElementById('profile-name-input').value = getUserName();
+    openModal('modal-profile');
+  });
+  document.getElementById('modal-profile-cancel').addEventListener('click', function() { closeModal('modal-profile'); });
+  document.getElementById('modal-profile-save').addEventListener('click', function() {
+    setUserName(document.getElementById('profile-name-input').value.trim());
+    updateUserDisplay();
+    closeModal('modal-profile');
+  });
+  document.getElementById('profile-name-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.getElementById('modal-profile-save').click();
+  });
+
+  function showShareModal(entry) {
+    document.getElementById('share-code-text').value = encodeShare(entry);
+    document.getElementById('share-toast').textContent = '';
+    openModal('modal-share-show');
+  }
+  document.getElementById('modal-share-close').addEventListener('click', function() { closeModal('modal-share-show'); });
+  document.getElementById('modal-share-copy').addEventListener('click', function() {
+    var ta = document.getElementById('share-code-text');
+    ta.select();
+    try { navigator.clipboard.writeText(ta.value).catch(function() { document.execCommand('copy'); }); }
+    catch(e) { document.execCommand('copy'); }
+    document.getElementById('share-toast').textContent = T[currentLang].copied;
+  });
+
+  document.getElementById('menu-import').addEventListener('click', function() {
+    document.getElementById('lang-dropdown').classList.remove('open');
+    document.getElementById('import-code-text').value = '';
+    document.getElementById('import-toast').textContent = '';
+    openModal('modal-import');
+  });
+  document.getElementById('modal-import-cancel').addEventListener('click', function() { closeModal('modal-import'); });
+  document.getElementById('modal-import-ok').addEventListener('click', function() {
+    try {
+      var payload = decodeShare(document.getElementById('import-code-text').value);
+      var entry = { id:'t_'+Date.now(), siteName:payload.siteName||'（現場名なし）', savedAt:payload.savedAt||new Date().toISOString(), sharedBy:payload.creator||'', data:payload.data };
+      var tables = lsLoad(); tables.unshift(entry); lsSave(tables);
+      document.getElementById('import-toast').textContent = T[currentLang].importOk;
+      document.getElementById('import-toast').style.color = '#34C759';
+      setTimeout(function() { closeModal('modal-import'); renderList(); }, 900);
+    } catch(e) {
+      document.getElementById('import-toast').textContent = T[currentLang].importErr;
+      document.getElementById('import-toast').style.color = '#FF3B30';
+    }
+  });
+
+  /* ── SCREEN SWITCH ── */
+  function showHome() {
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById('screen-home').classList.add('active');
+    document.getElementById('tab-bar').style.display = 'flex';
+    currentTab = 'home';
+    document.querySelectorAll('.tab-item').forEach(function(it){
+      it.classList.toggle('active', it.dataset.tab === 'home');
+    });
+    document.body.classList.remove('confirmed');
+    applyLang(currentLang);
+    updateUserDisplay();
+    renderList();
+  }
+  function showEdit() {
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById('screen-edit').classList.add('active');
+    document.getElementById('tab-bar').style.display = 'none';
+    applyLang(currentLang);
+    window.scrollTo(0, 0);
+  }
+
+  /* ── HOME LIST ── */
+  function renderList() {
+    var tables = lsLoad();
+    var listEl = document.getElementById('home-list');
+    var emptyEl = document.getElementById('home-empty');
+    listEl.innerHTML = '';
+    if (tables.length === 0) { emptyEl.textContent = T[currentLang].homeEmpty; return; }
+    emptyEl.textContent = '';
+    // Group into a single card group
+    var group = document.createElement('div');
+    group.style.cssText = 'background:#FFFFFF;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);margin-bottom:20px;';
+    tables.forEach(function(t, idx) {
+      var card = document.createElement('div');
+      card.className = 'card';
+      if (idx > 0) card.style.borderTop = '0.5px solid #E5E5EA';
+      var d = t.savedAt ? new Date(t.savedAt).toLocaleDateString('ja-JP') : '';
+      var main = document.createElement('div'); main.className = 'card-main';
+      var metaHtml = '<div class="card-meta">'+d+'</div>';
+      if (t.sharedBy) metaHtml += '<div class="card-shared-by">📤 '+t.sharedBy+' '+T[currentLang].sharedBy+'</div>';
+      main.innerHTML =
+        '<div class="card-icon">📋</div>' +
+        '<div class="card-text">' +
+          '<div class="card-name">'+(t.siteName||'（現場名なし）')+'</div>'+metaHtml+
+        '</div>' +
+        '<div class="card-chevron">›</div>';
+      main.addEventListener('click', (function(id){ return function(){ openTable(id); }; })(t.id));
+      var actions = document.createElement('div'); actions.className = 'card-actions';
+      var share = document.createElement('button'); share.className = 'card-share'; share.textContent = '📤';
+      share.addEventListener('click', (function(entry){ return function(e){ e.stopPropagation(); showShareModal(entry); }; })(t));
+      var del = document.createElement('button'); del.className = 'card-del'; del.textContent = '✕';
+      del.addEventListener('click', (function(id){ return function(){ deleteEntry(id); }; })(t.id));
+      actions.appendChild(share); actions.appendChild(del);
+      card.appendChild(main); card.appendChild(actions);
+      group.appendChild(card);
+    });
+    listEl.appendChild(group);
+  }
+
+  function deleteEntry(id) {
+    if (!confirm(T[currentLang].deleteConfirm)) return;
+    lsSave(lsLoad().filter(function(t){ return t.id !== id; }));
+    renderList();
+  }
+  function openTable(id) {
+    var t = lsLoad().find(function(x){ return x.id === id; });
+    if (!t) return;
+    currentId = id; restoreFromData(t.data); showEdit();
+  }
+
+  document.getElementById('btn-new').addEventListener('click', function() {
+    currentId = 't_' + Date.now(); buildDefaults(); showEdit();
+  });
+  document.getElementById('btn-back').addEventListener('click', function() {
+    var tables = lsLoad();
+    var idx = tables.findIndex(function(x){ return x.id === currentId; });
+    var existing = idx >= 0 ? tables[idx] : {};
+    var entry = { id:currentId, siteName:document.getElementById('siteInput').value.trim()||'（現場名なし）', savedAt:new Date().toISOString(), sharedBy:existing.sharedBy||'', data:captureData() };
+    if (idx >= 0) { tables[idx] = entry; } else { tables.unshift(entry); }
+    lsSave(tables); showHome();
+  });
+
+  /* ── ROWS ── */
+  function makeRow(type, i, fixedName) {
+    var tr = document.createElement('tr');
+    var qKey, nHtml, unit;
+    if (type === 'kokan') {
+      qKey='k'+i+'_q'; unit='本';
+      nHtml = fixedName !== undefined
+        ? '<td class="name-td">'+fixedName+'</td>'
+        : '<td class="name-td"><input class="ni" type="text" data-key="k'+i+'_n" placeholder="寸法"></td>';
+    } else if (type === 'kin') {
+      qKey='n'+i+'_q'; unit='袋';
+      nHtml='<td class="name-td"><input class="ni" type="text" data-key="n'+i+'_n" placeholder="名前"></td>';
+    } else if (type === 'bata') {
+      qKey='b'+i+'_q'; unit='本';
+      nHtml='<td class="name-td"><input class="ni" type="text" data-key="b'+i+'_n" placeholder="名前"></td>';
+    } else if (type === 'sup') {
+      qKey='s'+i+'_q'; unit='本';
+      nHtml='<td class="name-td"><input class="shaku" type="text" data-key="s'+i+'_s" placeholder="0">尺</td>';
+    } else if (type === 'sangi') {
+      qKey='sg'+i+'_q'; unit='本';
+      nHtml='<td class="name-td"><input class="ni" type="text" data-key="sg'+i+'_n" placeholder="寸法"></td>';
+    } else {
+      qKey='d'+i+'_q'; unit='';
+      nHtml='<td class="name-td"><input class="ni" type="text" data-key="d'+i+'_n" placeholder="道具名"></td>';
+    }
+    var unitSpan = unit ? '<span class="unit">'+unit+'</span>' : '';
+    tr.innerHTML = nHtml +
+      '<td class="qty-td"><input class="qty" type="number" min="0" data-key="'+qKey+'">' + unitSpan + '</td>' +
+      '<td class="del-td"><button class="del">✕</button></td>';
+    return tr;
+  }
+
+  function makeCustomRow(ci, ri) {
+    var tr = document.createElement('tr');
+    var qKey = 'cx'+ci+'_r'+ri+'_q';
+    var nKey = 'cx'+ci+'_r'+ri+'_n';
+    tr.innerHTML =
+      '<td class="name-td"><input class="ni" type="text" data-key="'+nKey+'" placeholder="名前"></td>' +
+      '<td class="qty-td"><input class="qty" type="number" min="0" data-key="'+qKey+'"></td>' +
+      '<td class="del-td"><button class="del">✕</button></td>';
+    return tr;
+  }
+
+  function makeCustomSection(colId, ci, titleVal) {
+    var wrap = document.createElement('div');
+    wrap.className = 'custom-section';
+    wrap.dataset.ci = ci;
+    var sdel = document.createElement('button');
+    sdel.className = 'section-del-btn';
+    sdel.textContent = '✕ セクションを削除';
+    sdel.addEventListener('click', function() {
+      if (!confirm(T[currentLang].sectionDeleteConfirm)) return;
+      wrap.remove();
+    });
+    var table = document.createElement('table');
+    table.className = 'custom-table';
+    var thead = document.createElement('thead');
+    var thr = document.createElement('tr');
+    var th = document.createElement('th');
+    th.setAttribute('colspan', '3');
+    var titleInput = document.createElement('input');
+    titleInput.className = 'custom-title';
+    titleInput.type = 'text';
+    titleInput.placeholder = T[currentLang].customTitlePlaceholder;
+    titleInput.dataset.key = 'cx'+ci+'_title';
+    if (titleVal) titleInput.value = titleVal;
+    th.appendChild(titleInput);
+    thr.appendChild(th);
+    thead.appendChild(thr);
+    var tbody = document.createElement('tbody');
+    tbody.id = 'cx'+ci+'-body';
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    var addRow = document.createElement('button');
+    addRow.className = 'add-btn custom-add-btn';
+    addRow.textContent = '＋ ' + T[currentLang].addRowSuffix;
+    addRow.addEventListener('click', function() {
+      var rowCount = tbody.querySelectorAll('tr').length;
+      tbody.appendChild(makeCustomRow(ci, rowCount));
+    });
+    wrap.appendChild(sdel); wrap.appendChild(table); wrap.appendChild(addRow);
+    var col = document.getElementById(colId);
+    var addTitleBtn = document.getElementById('add-title-' + (colId === 'col-left' ? 'left' : 'right'));
+    col.insertBefore(wrap, addTitleBtn);
+    return { tbody: tbody, ci: ci };
+  }
+
+  function checkVis(type) {
+    var has = document.getElementById(type+'-body').querySelectorAll('tr').length > 0;
+    document.getElementById(type+'-table').style.display = has ? '' : 'none';
+  }
+
+  document.getElementById('add-title-left').addEventListener('click', function() {
+    makeCustomSection('col-left', customCount++, '');
+  });
+  document.getElementById('add-title-right').addEventListener('click', function() {
+    makeCustomSection('col-right', customCount++, '');
+  });
+
+  function buildDefaults() {
+    counts = { kokan:0, kin:0, bata:0, sup:0, sangi:0, dogu:0 };
+    customCount = 0;
+    document.querySelectorAll('.custom-section').forEach(function(el){ el.remove(); });
+    ['kokan','kin','bata','sup','sangi','dogu'].forEach(function(t){
+      document.getElementById(t+'-body').innerHTML = '';
+    });
+    document.getElementById('siteInput').value = '';
+    document.body.classList.remove('confirmed');
+    var kb = document.getElementById('kokan-body');
+    ['4m','3.5m','3m','2.5m','2m','1.5m','1m'].forEach(function(n){
+      kb.appendChild(makeRow('kokan', counts.kokan++, n));
+    });
+    var nb = document.getElementById('kin-body');
+    ['ホームタイ','ダブル','足長','短足'].forEach(function(n){
+      var tr = makeRow('kin', counts.kin++);
+      tr.querySelector('input.ni').value = n;
+      nb.appendChild(tr);
+    });
+    document.getElementById('bata-body').appendChild(makeRow('bata', counts.bata++));
+    var sb = document.getElementById('sup-body');
+    for (var i=0;i<3;i++) sb.appendChild(makeRow('sup', counts.sup++));
+    document.getElementById('sangi-body').appendChild(makeRow('sangi', counts.sangi++));
+    var db = document.getElementById('dogu-body');
+    for (var j=0;j<10;j++) db.appendChild(makeRow('dogu', counts.dogu++));
+    ['kokan','kin','bata','sup','sangi','dogu'].forEach(checkVis);
+  }
+
+  function captureData() {
+    var data = { site: document.getElementById('siteInput').value, rows: {}, custom: [] };
+    ['kokan','kin','bata','sup','sangi','dogu'].forEach(function(type){
+      var rows = [];
+      document.getElementById(type+'-body').querySelectorAll('tr').forEach(function(tr){
+        var cells = {};
+        tr.querySelectorAll('[data-key]').forEach(function(el){ cells[el.dataset.key] = el.value; });
+        var nd = tr.querySelector('.name-td');
+        if (nd && !nd.querySelector('input')) cells['_fixed'] = nd.textContent.trim();
+        rows.push(cells);
+      });
+      data.rows[type] = rows;
+    });
+    document.querySelectorAll('.custom-section').forEach(function(sec) {
+      var ci = sec.dataset.ci;
+      var colId = sec.closest('.col-wrap').id;
+      var titleEl = sec.querySelector('input.custom-title');
+      var title = titleEl ? titleEl.value : '';
+      var rows = [];
+      sec.querySelectorAll('tbody tr').forEach(function(tr){
+        var cells = {};
+        tr.querySelectorAll('[data-key]').forEach(function(el){ cells[el.dataset.key] = el.value; });
+        rows.push(cells);
+      });
+      data.custom.push({ ci: ci, colId: colId, title: title, rows: rows });
+    });
+    return data;
+  }
+
+  function restoreFromData(data) {
+    counts = { kokan:0, kin:0, bata:0, sup:0, sangi:0, dogu:0 };
+    customCount = 0;
+    document.querySelectorAll('.custom-section').forEach(function(el){ el.remove(); });
+    ['kokan','kin','bata','sup','sangi','dogu'].forEach(function(t){
+      document.getElementById(t+'-body').innerHTML = '';
+    });
+    document.body.classList.remove('confirmed');
+    if (!data) { buildDefaults(); return; }
+    document.getElementById('siteInput').value = data.site || '';
+    if (!data.rows) { buildDefaults(); return; }
+    ['kokan','kin','bata','sup','sangi','dogu'].forEach(function(type){
+      var saved = data.rows[type]; if (!saved) return;
+      var tbody = document.getElementById(type+'-body');
+      saved.forEach(function(cells){
+        var i = counts[type]++;
+        var tr = cells['_fixed'] ? makeRow('kokan', i, cells['_fixed']) : makeRow(type, i);
+        tbody.appendChild(tr);
+        Object.keys(cells).forEach(function(key){
+          if (key === '_fixed') return;
+          var el = tr.querySelector('[data-key="'+key+'"]');
+          if (el) el.value = cells[key];
+        });
+      });
+      checkVis(type);
+    });
+    if (data.custom) {
+      data.custom.forEach(function(sec) {
+        var ci = parseInt(sec.ci, 10);
+        if (ci >= customCount) customCount = ci + 1;
+        var result = makeCustomSection(sec.colId, ci, sec.title);
+        sec.rows.forEach(function(cells, ri) {
+          var tr = makeCustomRow(ci, ri);
+          result.tbody.appendChild(tr);
+          Object.keys(cells).forEach(function(key){
+            var el = tr.querySelector('[data-key="'+key+'"]');
+            if (el) el.value = cells[key];
+          });
+        });
+      });
+    }
+  }
+
+  document.body.addEventListener('click', function(e){
+    var btn = e.target.closest('.del');
+    if (!btn) return;
+    if (!confirm(T[currentLang].rowDeleteConfirm)) return;
+    var tr = btn.closest('tr');
+    var tbody = tr.closest('tbody');
+    var typeMatch = tbody.id.replace('-body','');
+    tr.remove();
+    if (['kokan','kin','bata','sup','sangi','dogu'].indexOf(typeMatch) >= 0) checkVis(typeMatch);
+  });
+
+  ['kokan','kin','bata','sup','sangi','dogu'].forEach(function(type){
+    document.getElementById('add-'+type).addEventListener('click', function(){
+      document.getElementById(type+'-body').appendChild(makeRow(type, counts[type]++));
+      checkVis(type);
+    });
+  });
+
+  document.getElementById('sheet').addEventListener('keydown', function(e){
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('#sheet input'));
+    var idx = inputs.indexOf(e.target);
+    if (idx >= 0 && idx < inputs.length - 1) inputs[idx+1].focus();
+  });
+
+  document.getElementById('btn-confirm').addEventListener('click', function(){
+    document.body.classList.add('confirmed');
+    var t = T[currentLang];
+    document.getElementById('btn-edit').textContent = t.btnEdit;
+    document.getElementById('btn-reset').textContent = t.btnReset;
+    document.getElementById('btn-print').textContent = t.btnPrint;
+  });
+  document.getElementById('btn-edit').addEventListener('click', function(){
+    document.body.classList.remove('confirmed');
+    applyLang(currentLang);
+  });
+  document.getElementById('btn-reset').addEventListener('click', function(){
+    if (!confirm(T[currentLang].resetConfirm)) return;
+    buildDefaults(); applyLang(currentLang);
+  });
+  document.getElementById('btn-print').addEventListener('click', function(){ window.print(); });
+
+  /* ─────────────────────────────────────────
+     CALENDAR
+  ───────────────────────────────────────── */
+  var selectedEventColor = EVENT_COLORS[0];
+  var selectedLinkId = null;
+
+  function dateKey(y, m, d) {
+    return y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+  }
+
+  function getEventsForDate(dk) {
+    return calLoad().filter(function(e){ return e.date === dk; });
+  }
+
+  function initCalendar() {
+    var now = new Date();
+    calYear = now.getFullYear();
+    calMonth = now.getMonth();
+    calSelectedDate = dateKey(calYear, calMonth, now.getDate());
+  }
+
+  function renderCalendar() {
+    var grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+    var now = new Date();
+    var todayKey = dateKey(now.getFullYear(), now.getMonth(), now.getDate());
+    var allEvents = calLoad();
+
+    // Month label
+    var monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    document.getElementById('cal-month-label').innerHTML =
+      calYear + '年<span>' + monthNames[calMonth] + '</span>';
+
+    // Build grid
+    var firstDay = new Date(calYear, calMonth, 1).getDay();
+    var daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+    var daysInPrev = new Date(calYear, calMonth, 0).getDate();
+    var totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+
+    for (var i = 0; i < totalCells; i++) {
+      var cell = document.createElement('div');
+      cell.className = 'cal-cell';
+      var day, year = calYear, month = calMonth, isOther = false;
+      if (i < firstDay) {
+        day = daysInPrev - firstDay + i + 1;
+        month = calMonth - 1; if (month < 0) { month = 11; year--; }
+        isOther = true;
+      } else if (i >= firstDay + daysInMonth) {
+        day = i - firstDay - daysInMonth + 1;
+        month = calMonth + 1; if (month > 11) { month = 0; year++; }
+        isOther = true;
+      } else {
+        day = i - firstDay + 1;
+      }
+      var dk = dateKey(year, month, day);
+      var dow = i % 7;
+      if (isOther) cell.classList.add('other-month');
+      if (dow === 0) cell.classList.add('sun');
+      if (dow === 6) cell.classList.add('sat');
+      if (dk === todayKey) cell.classList.add('today');
+      if (dk === calSelectedDate) cell.classList.add('selected');
+      var dayDiv = document.createElement('div'); dayDiv.className = 'cal-day';
+      dayDiv.textContent = day;
+      cell.appendChild(dayDiv);
+      // dots
+      var dayEvents = allEvents.filter(function(e){ return e.date === dk; });
+      if (dayEvents.length > 0) {
+        var dots = document.createElement('div'); dots.className = 'cal-dots';
+        dayEvents.slice(0, 3).forEach(function(ev) {
+          var dot = document.createElement('div'); dot.className = 'cal-dot';
+          dot.style.background = ev.color || '#007AFF';
+          dots.appendChild(dot);
+        });
+        cell.appendChild(dots);
+      }
+      (function(dk2){ cell.addEventListener('click', function(){ selectDate(dk2); }); })(dk);
+      grid.appendChild(cell);
+    }
+    renderEvents();
+  }
+
+  function selectDate(dk) {
+    calSelectedDate = dk;
+    renderCalendar();
+  }
+
+  function renderEvents() {
+    var events = getEventsForDate(calSelectedDate);
+    var listEl = document.getElementById('cal-event-list');
+    var dateEl = document.getElementById('cal-events-date');
+    listEl.innerHTML = '';
+
+    // Format selected date label
+    if (calSelectedDate) {
+      var parts = calSelectedDate.split('-');
+      var y = parseInt(parts[0]), m = parseInt(parts[1])-1, d = parseInt(parts[2]);
+      var dateObj = new Date(y, m, d);
+      var dow = ['日','月','火','水','木','金','土'][dateObj.getDay()];
+      dateEl.textContent = y + '年' + (m+1) + '月' + d + '日（' + dow + '）';
+    }
+
+    if (events.length === 0) {
+      listEl.innerHTML = '<div class="cal-no-events">'+T[currentLang].calNoEvents+'</div>';
+      return;
+    }
+    var tables = lsLoad();
+    events.forEach(function(ev) {
+      var row = document.createElement('div'); row.className = 'cal-event-row';
+      var dot = document.createElement('div'); dot.className = 'cal-event-color';
+      dot.style.background = ev.color || '#007AFF';
+      var info = document.createElement('div'); info.className = 'cal-event-info';
+      var title = document.createElement('div'); title.className = 'cal-event-title';
+      title.textContent = ev.title || '（タイトルなし）';
+      info.appendChild(title);
+      if (ev.linkedId) {
+        var linked = tables.find(function(t){ return t.id === ev.linkedId; });
+        if (linked) {
+          var sub = document.createElement('div'); sub.className = 'cal-event-sub';
+          sub.textContent = '📋 ' + (linked.siteName || '（現場名なし）');
+          info.appendChild(sub);
+        }
+      }
+      var del = document.createElement('button'); del.className = 'cal-event-del'; del.textContent = '×';
+      del.addEventListener('click', function(e){
+        e.stopPropagation();
+        var all = calLoad();
+        calSave(all.filter(function(x){ return x.id !== ev.id; }));
+        renderCalendar();
+      });
+      row.appendChild(dot); row.appendChild(info); row.appendChild(del);
+      // tap to open linked table
+      if (ev.linkedId) {
+        row.addEventListener('click', function(){ openTable(ev.linkedId); });
+      }
+      listEl.appendChild(row);
+    });
+  }
+
+  // Color picker
+  function buildColorPicker() {
+    var row = document.getElementById('event-color-row');
+    row.innerHTML = '';
+    EVENT_COLORS.forEach(function(c) {
+      var btn = document.createElement('button');
+      btn.className = 'color-dot-btn' + (c === selectedEventColor ? ' selected' : '');
+      btn.style.background = c;
+      btn.addEventListener('click', function(){
+        selectedEventColor = c;
+        document.querySelectorAll('.color-dot-btn').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+      });
+      row.appendChild(btn);
+    });
+  }
+
+  function buildLinkList() {
+    var ll = document.getElementById('event-link-list');
+    ll.innerHTML = '';
+    var tables = lsLoad();
+    if (tables.length === 0) {
+      document.getElementById('event-link-section').style.display = 'none';
+      return;
+    }
+    document.getElementById('event-link-section').style.display = 'block';
+    tables.forEach(function(t) {
+      var item = document.createElement('div');
+      item.className = 'modal-link-item' + (selectedLinkId === t.id ? ' selected' : '');
+      item.innerHTML = '<div class="modal-link-item-icon">📋</div>' +
+        '<div class="modal-link-item-name">'+(t.siteName||'（現場名なし）')+'</div>' +
+        (selectedLinkId === t.id ? '<div class="modal-link-check">✓</div>' : '');
+      item.addEventListener('click', function(){
+        if (selectedLinkId === t.id) {
+          selectedLinkId = null;
+        } else {
+          selectedLinkId = t.id;
+        }
+        buildLinkList();
+      });
+      ll.appendChild(item);
+    });
+  }
+
+  document.getElementById('cal-add-btn').addEventListener('click', function(){
+    calEditingEventId = null;
+    selectedEventColor = EVENT_COLORS[0];
+    selectedLinkId = null;
+    document.getElementById('event-name-input').value = '';
+    document.getElementById('modal-event-title').textContent = T[currentLang].calAddModalTitle;
+    document.getElementById('modal-event-save').textContent = '追加';
+    buildColorPicker();
+    buildLinkList();
+    openModal('modal-event');
+    setTimeout(function(){ document.getElementById('event-name-input').focus(); }, 100);
+  });
+
+  document.getElementById('modal-event-cancel').addEventListener('click', function(){ closeModal('modal-event'); });
+  document.getElementById('modal-event-save').addEventListener('click', function(){
+    var title = document.getElementById('event-name-input').value.trim();
+    if (!title) { document.getElementById('event-name-input').focus(); return; }
+    var all = calLoad();
+    if (calEditingEventId) {
+      var idx = all.findIndex(function(e){ return e.id === calEditingEventId; });
+      if (idx >= 0) { all[idx].title = title; all[idx].color = selectedEventColor; all[idx].linkedId = selectedLinkId || null; }
+    } else {
+      all.push({ id: 'ev_'+Date.now(), date: calSelectedDate, title: title, color: selectedEventColor, linkedId: selectedLinkId || null });
+    }
+    calSave(all);
+    closeModal('modal-event');
+    renderCalendar();
+  });
+  document.getElementById('event-name-input').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') document.getElementById('modal-event-save').click();
+  });
+
+  document.getElementById('cal-prev').addEventListener('click', function(){
+    calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCalendar();
+  });
+  document.getElementById('cal-next').addEventListener('click', function(){
+    calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+    renderCalendar();
+  });
+  document.getElementById('cal-today-btn').addEventListener('click', function(){
+    var now = new Date();
+    calYear = now.getFullYear(); calMonth = now.getMonth();
+    calSelectedDate = dateKey(calYear, calMonth, now.getDate());
+    renderCalendar();
+  });
+
+  /* ── BOOT ── */
+  initCalendar();
+  applyLang('ja');
+  updateUserDisplay();
+  showHome();
+})();
+</script>
+
+</body>
+</html>
